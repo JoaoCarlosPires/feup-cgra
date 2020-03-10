@@ -29,7 +29,6 @@ class MyScene extends CGFscene {
         this.tangram = new MyTangram(this);
         this.unitcube = new MyUnitCube(this);
         this.unitcubetan = new MyUnitCubeTan(this);
-        this.unitcubequad = new MyUnitCubeQuad(this);
 
         //Objects connected to MyInterface
         this.displayAxis = true;
@@ -42,7 +41,6 @@ class MyScene extends CGFscene {
         this.displayTangram = false;
         this.displayUnitCube = false;
         this.displayUnitCubeTan = false;
-        this.displayUnitCubeQuad = false;
 
     }
     initLights() {
@@ -113,9 +111,6 @@ class MyScene extends CGFscene {
 
         if (this.displayUnitCube)
             this.unitcube.display();
-
-        if (this.displayUnitCubeQuad)
-            this.unitcubequad.display();
 
         if (this.displayUnitCubeTan)
             this.unitcubetan.display();
