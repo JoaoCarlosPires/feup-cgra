@@ -126,6 +126,13 @@ class MyScene extends CGFscene {
         this.material3.setSpecular(1, 0, 0, 1.0);
         this.material3.setShininess(10.0);
 
+        // Wood (no ambient, low specular)
+        this.material4 = new CGFappearance(this);
+        this.material4.setAmbient(0.0, 0.0, 0.0, 1.0);
+        this.material4.setDiffuse(133/255, 94/255, 66/255, 1.0);
+        this.material4.setSpecular(0, 0, 0, 1.0);
+        this.material4.setShininess(10.0);
+
         // Custom material (can be changed in the interface)
         // initially midrange values on ambient, diffuse and specular, on R, G and B respectively
 
@@ -139,10 +146,10 @@ class MyScene extends CGFscene {
 
         this.updateCustomMaterial();
 
-        this.materials = [this.material1, this.material2, this.material3, this.customMaterial];
+        this.materials = [this.material1, this.material2, this.material3, this.customMaterial, this.material4];
 
         // Labels and ID's for object selection on MyInterface
-        this.materialIDs = {'Red Ambient': 0, 'Red Diffuse': 1, 'Red Specular': 2, 'Custom': 3 };
+        this.materialIDs = {'Red Ambient': 0, 'Red Diffuse': 1, 'Red Specular': 2, 'Custom': 3, 'Wood': 4};
     }
     display() {
         // ---- BEGIN Background, camera and axis setup
@@ -168,14 +175,34 @@ class MyScene extends CGFscene {
 
         this.pushMatrix();
         this.scale(this.scaleFactor,this.scaleFactor,this.scaleFactor);
+
+        if (this.objects[this.selectedObject] == this.tangram) {
+            if (this.displayNormals) {
+                this.tangram.diamond.enableNormalViz();
+                this.tangram.trianglepink.enableNormalViz();
+                this.tangram.parallelogram.enableNormalViz();
+                this.tangram.trianglered.enableNormalViz();
+                this.tangram.trianglepurple.enableNormalViz();
+                this.tangram.triangleorange.enableNormalViz();
+                this.tangram.triangleblue.enableNormalViz();
+            } else {
+                this.tangram.diamond.disableNormalViz();
+                this.tangram.trianglepink.disableNormalViz();
+                this.tangram.parallelogram.disableNormalViz();
+                this.tangram.trianglered.disableNormalViz();
+                this.tangram.trianglepurple.disableNormalViz();
+                this.tangram.triangleorange.disableNormalViz();
+                this.tangram.triangleblue.disableNormalViz();            }
+        } else {
+            if (this.displayNormals)
+                this.objects[this.selectedObject].enableNormalViz();
+            else
+                this.objects[this.selectedObject].disableNormalViz();
         
-        if (this.displayNormals)
-            this.objects[this.selectedObject].enableNormalViz();
-        else
-            this.objects[this.selectedObject].disableNormalViz();
-        
+        }
         this.objects[this.selectedObject].display();
         this.popMatrix();
+        
         // ---- END Primitive drawing section
     }
 }
