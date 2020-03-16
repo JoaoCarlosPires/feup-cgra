@@ -33,8 +33,6 @@ class MyInterface extends CGFinterface {
         
         this.gui.add(this.scene, "displayUnitCube").name('Display UnitCube');
 
-        this.gui.add(this.scene, "displayUnitCubeQuad").name('UnitCubeQuad');
-
         this.gui.add(this.scene, "displayUnitCubeTan").name('UnitCubeTan');
 
         //Slider element in GUI

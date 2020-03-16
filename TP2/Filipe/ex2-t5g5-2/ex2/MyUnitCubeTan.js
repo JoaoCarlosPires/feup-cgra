@@ -7,13 +7,14 @@ class MyUnitCubeTan extends CGFobject {
 	display() {
 
         this.scene.pushMatrix();
-        this.scene.scale(11,11,11);
-        this.scene.translate(0.5,0.5,-0.5);
+        this.scene.rotate(-90*Math.PI/180,1,0,0);
+        this.scene.translate(-0.5,0.5,-0.5);
         this.base.display();
         this.scene.popMatrix();
 
         this.scene.pushMatrix();
-        this.scene.translate(5.5,5,0.01);
+        this.scene.rotate(-90*Math.PI/180,1,0,0);
+        this.scene.rotate(180*Math.PI/180,0,0,1);
         this.tangram.display();
         this.scene.popMatrix();
 
