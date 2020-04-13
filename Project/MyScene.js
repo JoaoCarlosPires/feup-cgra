@@ -41,12 +41,16 @@ class MyScene extends CGFscene {
             'Cylinder': 1,
             'Cube Map' : 2,
         };
+        this.incompleteSphere = new MySphere(this, 16, 8);
+        this.cylinder = new MyCylinder(this, 3, 100);
 
         //Objects connected to MyInterface
         this.displayAxis = true;
         this.displayNormals = false;
         this.selectedTexture = -1;
         
+        this.displaySphere = false;
+        this.displayCylinder = false;
         this.appearance = new CGFappearance(this);
         this.appearance.setAmbient(0.1, 0.1, 0.1, 1);
         this.appearance.setDiffuse(0.9, 0.9, 0.9, 1);
@@ -129,7 +133,6 @@ class MyScene extends CGFscene {
         this.appearance.apply();
 
         //This sphere does not have defined texture coordinates
-
 
         if (this.displayNormals)
             this.objects[this.selectedObject].enableNormalViz();
