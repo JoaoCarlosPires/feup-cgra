@@ -7,8 +7,7 @@ class MyScene extends CGFscene {
         super();
         this.texture = null;
         this.appearance = null;
-        this.selectedObject = 0;
-        this.selectedTexture = -1;
+        this.selectedTexture = 0;
     }
     init(application) {
         super.init(application);
@@ -29,28 +28,20 @@ class MyScene extends CGFscene {
 
         //Initialize scene objects
         this.axis = new CGFaxis(this);
-        this.objects=[
-            new MySphere(this, 16, 8),
-            new MyCylinder(this, 3, 1000),
-            new MyUnitCube(this),
-        ];
 
-        // Object interface variables
-        this.objectList = {
-            'Sphere': 0,
-            'Cylinder': 1,
-            'Cube Map' : 2,
-        };
         this.incompleteSphere = new MySphere(this, 16, 8);
         this.cylinder = new MyCylinder(this, 3, 100);
+        this.cube = new MyUnitCube(this);
+        this.vehicle = new MyVehicle(this, 4);
 
         //Objects connected to MyInterface
         this.displayAxis = true;
         this.displayNormals = false;
-        this.selectedTexture = -1;
-        
+        this.displayVehicle = false;
         this.displaySphere = false;
         this.displayCylinder = false;
+        this.displayCube = false;
+
         this.appearance = new CGFappearance(this);
         this.appearance.setAmbient(0.1, 0.1, 0.1, 1);
         this.appearance.setDiffuse(0.9, 0.9, 0.9, 1);
@@ -90,12 +81,6 @@ class MyScene extends CGFscene {
         this.setShininess(10.0);
     }
 
-    // called when a new object is selected
-    onSelectedObjectChanged(v) {
-        // update wireframe mode when the object changes
-        this.onWireframeChanged(this.wireframe);
-    }
-
     onSelectedTextureChanged(v) {
         // update wireframe mode when the object changes
         this.appearance.setTexture(this.textures[this.selectedTexture]);
@@ -129,17 +114,31 @@ class MyScene extends CGFscene {
         this.setDefaultAppearance();
 
         // ---- BEGIN Primitive drawing section
+        //this.pushMatrix();
 
         this.appearance.apply();
 
         //This sphere does not have defined texture coordinates
 
-        if (this.displayNormals)
-            this.objects[this.selectedObject].enableNormalViz();
-        else
-            this.objects[this.selectedObject].disableNormalViz();
+        if (this.displaySphere)
+            this.incompleteSphere.display();
 
-        this.objects[this.selectedObject].display();
+        if (this.displayCylinder) {        
+            if (this.displayNormals) {
+                this.cylinder.enableNormalViz();
+            } else {
+                this.cylinder.disableNormalViz();
+            }
+            this.cylinder.display();
+        }    
 
+        if (this.displayVehicle) {
+            this.vehicle.display();
+        }
+
+        if (this.displayCube) {
+            this.cube.display();
+        }
+        //this.popMatrix();
     }
 }
