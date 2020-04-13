@@ -28,10 +28,11 @@ class MyScene extends CGFscene {
         //Initialize scene objects
         this.axis = new CGFaxis(this);
         this.incompleteSphere = new MySphere(this, 16, 8);
-        this.cylinder = new MyCylinder(this, 3, 1000);
+        this.cylinder = new MyCylinder(this, 3, 100);
 
         //Objects connected to MyInterface
         this.displayAxis = true;
+        this.displayNormals = false;
         this.displaySphere = false;
         this.displayCylinder = false;
         this.appearance = new CGFappearance(this);
@@ -89,9 +90,15 @@ class MyScene extends CGFscene {
         //This sphere does not have defined texture coordinates
         if (this.displaySphere)
             this.incompleteSphere.display();
-
-        if (this.displayCylinder)
-            this.cylinder.display();    
+        
+        if (this.displayCylinder) {        
+            if (this.displayNormals) {
+                this.cylinder.enableNormalViz();
+            } else {
+                this.cylinder.disableNormalViz();
+            }
+            this.cylinder.display();
+        }    
         // ---- END Primitive drawing section
     }
 }
