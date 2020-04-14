@@ -41,6 +41,8 @@ class MyScene extends CGFscene {
         this.displaySphere = false;
         this.displayCylinder = false;
         this.displayCube = false;
+        this.scaleFactor = 1;
+        this.speedFactor = 1;
 
         this.appearance = new CGFappearance(this);
         this.appearance.setAmbient(0.1, 0.1, 0.1, 1);
@@ -98,26 +100,24 @@ class MyScene extends CGFscene {
         // Check for key codes e.g. in https://keycode.info/
         if (this.gui.isKeyPressed("KeyW")) {
             text+=" W ";
-            this.vehicle.accelerate(1);
+            this.vehicle.accelerate(this.speedFactor);
             keysPressed=true;
         }
         
         if (this.gui.isKeyPressed("KeyS")) {
             text+=" S ";
-            this.vehicle.accelerate(-1);
+            this.vehicle.accelerate(-this.speedFactor);
             keysPressed=true;
         }
 
         if (this.gui.isKeyPressed("KeyA")) {
             text+=" A ";
-            this.vehicle.turn(10);
-            keysPressed=true;
+            this.vehicle.turn(Math.PI/6);
         }
 
         if (this.gui.isKeyPressed("KeyD")) {
             text+=" D ";
-            this.vehicle.turn(-10);
-            keysPressed=true;
+            this.vehicle.turn(-Math.PI/6);
         }
 
         if (this.gui.isKeyPressed("KeyR")) {
@@ -168,16 +168,24 @@ class MyScene extends CGFscene {
             } else {
                 this.cylinder.disableNormalViz();
             }
+            this.pushMatrix();
             this.cylinder.display();
+            this.popMatrix();
         }    
 
         if (this.displayVehicle) {
-            this.vehicle.display();
+            this.pushMatrix(); 
+            this.vehicle.display(this.scaleFactor);
+            this.popMatrix();
         }
 
         if (this.displayCube) {
+            this.pushMatrix();
             this.cube.display();
+            this.popMatrix();
         }
-        //this.popMatrix();
+
+        
+
     }
 }

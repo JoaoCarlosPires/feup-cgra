@@ -13,7 +13,7 @@ class MyVehicle extends CGFobject {
         this.velocity = 0;
         this.posX=0;
         this.posY=0;
-        this.posZ=0;
+        this.posZ=-0.5;
     }
     initBuffers() {
         this.vertices = [];
@@ -75,32 +75,33 @@ class MyVehicle extends CGFobject {
         this.initBuffers();
         this.initNormalVizBuffers();
     }
-    display(){
+    display(scaleFactor){
         //Usar variáveis de orientação e posição aqui
         this.scene.setDiffuse(0,0,1);
         this.scene.setSpecular(0, 0, 0, 1);
         this.scene.setAmbient(0, 0, 0.5, 1);
 
-        this.scene.pushMatrix();
-
         this.scene.translate(this.posX, this.posY, this.posZ);
-        this.scene.rotate(this.angle*Math.PI/180.0, 0, 1, 0);
+        this.scene.rotate(this.angle, 0, 1, 0);
 
-        this.scene.translate(0,0,-0.5);
         this.scene.rotate(90.0*Math.PI/180.0, 1, 0, 0);
+        var sca = [scaleFactor, 0.0, 0.0, 0.0,
+            0.0, scaleFactor, 0.0, 0.0,
+            0.0, 0.0, scaleFactor, 0.0,
+            0.0, 0.0, 0.0, 1.0];
+        this.scene.multMatrix(sca); 
         super.display();
 
-        this.scene.popMatrix();
     }
     update(){
-        this.posX += this.velocity *Math.sin(this.angle*Math.PI/180.0);
-        this.posZ += this.velocity *Math.cos(this.angle*Math.PI/180.0);
+        this.posX += this.velocity *Math.sin(this.angle);
+        this.posZ += this.velocity *Math.cos(this.angle);
     }
     turn(val){
         this.angle += val;
     }
     accelerate(val){
-        this.velocity =val;
+        this.velocity=val;
     }
     reset(){
         this.angle=0;
