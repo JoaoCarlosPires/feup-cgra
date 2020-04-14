@@ -9,11 +9,11 @@ class MyVehicle extends CGFobject {
         this.stacks = stacks;
         this.initBuffers();
 
-        this.angle; //ToDo 
+        this.angle=0;
         this.velocity = 0;
-        this.posX; //ToDo
-        this.posY; //ToDo
-        this.posZ; //ToDo
+        this.posX=0;
+        this.posY=0;
+        this.posZ=0;
     }
     initBuffers() {
         this.vertices = [];
@@ -82,6 +82,10 @@ class MyVehicle extends CGFobject {
         this.scene.setAmbient(0, 0, 0.5, 1);
 
         this.scene.pushMatrix();
+
+        this.scene.translate(this.posX, this.posY, this.posZ);
+        this.scene.rotate(this.angle*Math.PI/180.0, 0, 1, 0);
+
         this.scene.translate(0,0,-0.5);
         this.scene.rotate(90.0*Math.PI/180.0, 1, 0, 0);
         super.display();
@@ -89,20 +93,21 @@ class MyVehicle extends CGFobject {
         this.scene.popMatrix();
     }
     update(){
-        //Atualizar a posição em função da velocidade e ângulo
+        this.posX += this.velocity *Math.sin(this.angle*Math.PI/180.0);
+        this.posZ += this.velocity *Math.cos(this.angle*Math.PI/180.0);
     }
     turn(val){
-        this.angle = val;
+        this.angle += val;
     }
     accelerate(val){
-        this.velocity+=val;
+        this.velocity =val;
     }
     reset(){
         this.angle=0;
         this.velocity=0;
-        //this.posX=..;
-        //this.posY=..;
-        //this.posZ=..;
+        this.posX=0;
+        this.posY=0;
+        this.posZ=0;
     }
 }
 
