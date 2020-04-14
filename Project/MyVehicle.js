@@ -8,6 +8,12 @@ class MyVehicle extends CGFobject {
         this.slices = slices;
         this.stacks = stacks;
         this.initBuffers();
+
+        this.angle; //ToDo 
+        this.velocity = 0;
+        this.posX; //ToDo
+        this.posY; //ToDo
+        this.posZ; //ToDo
     }
     initBuffers() {
         this.vertices = [];
@@ -70,6 +76,7 @@ class MyVehicle extends CGFobject {
         this.initNormalVizBuffers();
     }
     display(){
+        //Usar variáveis de orientação e posição aqui
         this.scene.setDiffuse(0,0,1);
         this.scene.setSpecular(0, 0, 0, 1);
         this.scene.setAmbient(0, 0, 0.5, 1);
@@ -80,6 +87,22 @@ class MyVehicle extends CGFobject {
         super.display();
 
         this.scene.popMatrix();
+    }
+    update(){
+        //Atualizar a posição em função da velocidade e ângulo
+    }
+    turn(val){
+        this.angle = val;
+    }
+    accelerate(val){
+        this.velocity+=val;
+    }
+    reset(){
+        this.angle=0;
+        this.velocity=0;
+        //this.posX=..;
+        //this.posY=..;
+        //this.posZ=..;
     }
 }
 
