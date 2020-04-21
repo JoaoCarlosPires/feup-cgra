@@ -7,6 +7,7 @@ class MyScene extends CGFscene {
         super();
         this.texture = null;
         this.appearance = null;
+        this.appearance2 = null;
         this.selectedTexture = 0;
     }
     init(application) {
@@ -33,6 +34,7 @@ class MyScene extends CGFscene {
         this.cylinder = new MyCylinder(this, 3, 100);
         this.cube = new MyUnitCube(this);
         this.vehicle = new MyVehicle(this, 4);
+        this.terrain = new MyTerrain(this);
 
         //Objects connected to MyInterface
         this.displayAxis = true;
@@ -41,6 +43,7 @@ class MyScene extends CGFscene {
         this.displaySphere = false;
         this.displayCylinder = false;
         this.displayCube = false;
+        this.displayTerrain = false;
         this.scaleFactor = 1;
         this.speedFactor = 1;
 
@@ -50,22 +53,24 @@ class MyScene extends CGFscene {
         this.appearance.setSpecular(0.1, 0.1, 0.1, 1);
         this.appearance.setShininess(10.0);
 
-        this.texture = new CGFtexture(this, "images/earth.jpg");
-		this.appearance.setTexture(this.texture);
-		this.appearance.setTextureWrap('REPEAT', 'REPEAT');
-        //------
-
         //------ Textures
         this.textures = [
             new CGFtexture(this, 'images/earth.jpg'),
             new CGFtexture(this, 'images/mountain.png'),
             new CGFtexture(this, 'images/cubemap.png')
         ];
+        
         this.textureList = {
             'Earth' : 0,
             'Mountain' : 1,
             'Sky' : 2,
+            'Terrain' : 3,
         };
+
+        this.textShaders = [];
+
+        this.terrain.addTexture();
+
     }
     initLights() {
         this.lights[0].setPosition(15, 2, 5, 1);
@@ -86,11 +91,7 @@ class MyScene extends CGFscene {
     onSelectedTextureChanged(v) {
         // update wireframe mode when the object changes
         this.appearance.setTexture(this.textures[this.selectedTexture]);
-    }
-
-    //Function that resets selected texture in quadMaterial
-    updateAppliedTexture() {
-        this.appearance.setTexture(this.textures[this.selectedTexture]);
+        
     }
 
     checkKeys() {
@@ -112,7 +113,7 @@ class MyScene extends CGFscene {
 
         if (this.gui.isKeyPressed("KeyA")) {
             text+=" A ";
-            this.vehicle.turn(Math.PI/6);
+            this.vehicle.turn(Math.PI/6);   
         }
 
         if (this.gui.isKeyPressed("KeyD")) {
@@ -157,7 +158,12 @@ class MyScene extends CGFscene {
 
         this.appearance.apply();
 
-        //This sphere does not have defined texture coordinates
+        this.setActiveShader(this.textShaders[0]);
+
+        this.terrain.bind();
+
+        this.gl.texParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_WRAP_S, this.gl.REPEAT);
+        this.gl.texParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_WRAP_T, this.gl.REPEAT);
 
         if (this.displaySphere)
             this.incompleteSphere.display();
@@ -185,6 +191,9 @@ class MyScene extends CGFscene {
             this.popMatrix();
         }
 
+        if (this.displayTerrain) {
+            this.terrain.display();
+        }
         
 
     }
