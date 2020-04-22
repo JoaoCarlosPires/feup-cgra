@@ -70,13 +70,10 @@ class MySphere extends CGFobject {
         
         this.texCoords.push(longitude*1/this.latDivs, latitude*1/this.longDivs);
         
-
       }
       phi += phiInc;
     }
     
-
-
     this.primitiveType = this.scene.gl.TRIANGLES;
     this.initGLBuffers();
   }

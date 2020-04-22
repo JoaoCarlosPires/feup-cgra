@@ -49,10 +49,7 @@ class MyScene extends CGFscene {
         this.appearance.setDiffuse(0.9, 0.9, 0.9, 1);
         this.appearance.setSpecular(0.1, 0.1, 0.1, 1);
         this.appearance.setShininess(10.0);
-
-        this.texture = new CGFtexture(this, "images/earth.jpg");
-		this.appearance.setTexture(this.texture);
-		this.appearance.setTextureWrap('REPEAT', 'REPEAT');
+        
         //------
 
         //------ Textures
