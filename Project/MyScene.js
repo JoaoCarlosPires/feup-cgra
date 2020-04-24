@@ -109,12 +109,12 @@ class MyScene extends CGFscene {
 
         if (this.gui.isKeyPressed("KeyA")) {
             text+=" A ";
-            this.vehicle.turn(Math.PI/6);
+            this.vehicle.turn(Math.PI/6,-Math.PI/12);
         }
 
         if (this.gui.isKeyPressed("KeyD")) {
             text+=" D ";
-            this.vehicle.turn(-Math.PI/6);
+            this.vehicle.turn(-Math.PI/6,Math.PI/12);
         }
 
         if (this.gui.isKeyPressed("KeyR")) {
@@ -122,6 +122,9 @@ class MyScene extends CGFscene {
             this.vehicle.reset();
             keysPressed=true;
         }
+
+        if (!this.gui.isKeyPressed("KeyA") && !this.gui.isKeyPressed("KeyD")) //isto fica aqui por enquanto
+            this.vehicle.wheelAngle=0;
         
         if (keysPressed)
             this.vehicle.update();   
