@@ -5,15 +5,17 @@
 class MyVehicle extends CGFobject {
     constructor(scene, slices, stacks) {
         super(scene);
-        this.slices = slices;
-        this.stacks = stacks;
+        this.body = new MyEllipsoid(scene);
+        this.gondola = new MyGondola(scene);
+        this.wheel = new MyWheel(scene);
         this.initBuffers();
 
         this.angle=0;
+        this.wheelAngle=0;
         this.velocity = 0;
         this.posX=0;
         this.posY=0;
-        this.posZ=-0.5;
+        this.posZ=0;
     }
     initBuffers() {
         this.vertices = [];
@@ -77,34 +79,75 @@ class MyVehicle extends CGFobject {
     }
     display(scaleFactor){
         //Usar variáveis de orientação e posição aqui
+        this.scene.pushMatrix();
+
         this.scene.setDiffuse(0,0,1);
         this.scene.setSpecular(0, 0, 0, 1);
         this.scene.setAmbient(0, 0, 0.5, 1);
-
+        
+        //aplica estas transformações a todos os elementos
         this.scene.translate(this.posX, this.posY, this.posZ);
-        this.scene.rotate(this.angle, 0, 1, 0);
+        this.scene.rotate(this.angle,0,1,0);
+        this.scene.scale(scaleFactor,scaleFactor,scaleFactor);
+        
+        //gondola
+        this.scene.pushMatrix();
+        this.scene.translate(0,-0.5,0);
+        this.gondola.display();
+        this.scene.popMatrix();
 
-        this.scene.rotate(90.0*Math.PI/180.0, 1, 0, 0);
-        var sca = [scaleFactor, 0.0, 0.0, 0.0,
-            0.0, scaleFactor, 0.0, 0.0,
-            0.0, 0.0, scaleFactor, 0.0,
-            0.0, 0.0, 0.0, 1.0];
-        this.scene.multMatrix(sca); 
-        super.display();
+        this.scene.pushMatrix(); //rotate only the horizontal wheels
+        this.scene.rotate(this.wheelAngle,0,1,0);
 
-    }
+        //leme de cima
+        this.scene.pushMatrix();
+        this.scene.translate(0,0.4,-0.9);
+        this.wheel.display();
+        this.scene.popMatrix();
+
+        //leme de baixo
+        this.scene.pushMatrix();
+        this.scene.translate(0,-0.4,-0.9);
+        this.scene.rotate(180*Math.PI/180,0,0,1);
+        this.wheel.display();
+        this.scene.popMatrix();
+
+        
+        this.scene.popMatrix();
+
+        //leme do lado direito (se visto de frente)
+        this.scene.pushMatrix();
+        this.scene.translate(0.4,0,-0.9);
+        this.scene.rotate(-90*Math.PI/180,0,0,1);
+        this.wheel.display();
+        this.scene.popMatrix();
+
+        //leme do lado esquerdo (se visto de frente)
+        this.scene.pushMatrix();
+        this.scene.translate(-0.4,0,-0.9);
+        this.scene.rotate(90*Math.PI/180,0,0,1);
+        this.wheel.display();
+        this.scene.popMatrix();
+        
+        this.body.display();
+
+
+        this.scene.popMatrix();
+        }
     update(){
         this.posX += this.velocity *Math.sin(this.angle);
         this.posZ += this.velocity *Math.cos(this.angle);
     }
-    turn(val){
+    turn(val,wheelVal){
         this.angle += val;
+        this.wheelAngle = wheelVal;
     }
     accelerate(val){
         this.velocity=val;
     }
     reset(){
         this.angle=0;
+        this.wheelAngle=0;
         this.velocity=0;
         this.posX=0;
         this.posY=0;
