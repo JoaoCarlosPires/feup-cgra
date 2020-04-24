@@ -199,6 +199,7 @@ class MyScene extends CGFscene {
 
             this.terrain.bind();
             this.terrain.display();
+            this.setActiveShader(this.defaultShader);
             this.popMatrix();
         }
         
