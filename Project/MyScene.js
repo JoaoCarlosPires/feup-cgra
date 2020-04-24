@@ -159,16 +159,9 @@ class MyScene extends CGFscene {
         this.setDefaultAppearance();
 
         // ---- BEGIN Primitive drawing section
-        //this.pushMatrix();
+        this.pushMatrix();
 
         this.appearance.apply();
-
-        this.setActiveShader(this.textShaders[0]);
-
-        this.terrain.bind();
-
-        this.gl.texParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_WRAP_S, this.gl.REPEAT);
-        this.gl.texParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_WRAP_T, this.gl.REPEAT);
 
         if (this.displaySphere)
             this.incompleteSphere.display();
@@ -196,10 +189,21 @@ class MyScene extends CGFscene {
             this.popMatrix();
         }
 
+        
         if (this.displayTerrain) {
+            this.pushMatrix();
+            this.setActiveShader(this.textShaders[0]);
+
+            this.gl.texParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_WRAP_S, this.gl.REPEAT);
+            this.gl.texParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_WRAP_T, this.gl.REPEAT);
+
+            this.terrain.bind();
             this.terrain.display();
+            this.popMatrix();
         }
         
+        
+        this.popMatrix();
 
     }
 }
