@@ -52,11 +52,8 @@ class MyScene extends CGFscene {
         this.appearance.setDiffuse(0.9, 0.9, 0.9, 1);
         this.appearance.setSpecular(0.1, 0.1, 0.1, 1);
         this.appearance.setShininess(10.0);
-<<<<<<< HEAD
-=======
         
         //------
->>>>>>> MyVehicle
 
         //------ Textures
         this.textures = [
