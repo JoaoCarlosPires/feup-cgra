@@ -8,6 +8,7 @@ class MyScene extends CGFscene {
         this.texture = null;
         this.appearance = null;
         this.material = null;
+        this.material2 = null;
         this.selectedTexture = 0;
     }
     init(application) {
@@ -44,33 +45,38 @@ class MyScene extends CGFscene {
         this.displayCylinder = false;
         this.displayCube = false;
         this.displayTerrain = false;
-        this.scaleFactor = 1;
+        this.scaleFactor = 3;
         this.speedFactor = 0.1;
 
         this.appearance = new CGFappearance(this);
-        this.appearance.setAmbient(0.1, 0.1, 0.1, 1);
-        this.appearance.setDiffuse(0.9, 0.9, 0.9, 1);
-        this.appearance.setSpecular(0.1, 0.1, 0.1, 1);
+        this.appearance.setAmbient(1, 0, 0, 1);
+        this.appearance.setDiffuse(0, 0, 0, 1);
+        this.appearance.setSpecular(0, 0, 0, 1);
+        this.appearance.setEmission(1,1,1,1);
         this.appearance.setShininess(10.0);
 
         this.material = new CGFappearance(this);
-        this.material.setAmbient(0.1, 0.1, 0.1, 1);
-        this.material.setDiffuse(0.9, 0.9, 0.9, 1);
-        this.material.setSpecular(0.1, 0.1, 0.1, 1);
+        this.material.setAmbient(1, 0, 0, 1);
+        this.material.setDiffuse(0, 0, 0, 1);
+        this.material.setSpecular(0, 0, 0, 1);
         this.material.setShininess(10.0);
+
+        this.material2 = new CGFappearance(this);
+        this.material2.setAmbient(1, 0, 0, 1);
+        this.material2.setDiffuse(0, 0, 0, 1);
+        this.material2.setSpecular(0, 0, 0, 1);
+        this.material2.setShininess(10.0);
 
 
         //------ Textures
         this.textures = [
-            new CGFtexture(this, 'images/earth.jpg'),
             new CGFtexture(this, 'images/mountain.png'),
-            new CGFtexture(this, 'images/cubemap.png')
+            new CGFtexture(this, 'images/cubemap.png'),
         ];
         
         this.textureList = {
-            'Earth' : 0,
-            'Mountain' : 1,
-            'Sky' : 2,
+            'Mountain' : 0,
+            'Sky' : 1,
         };
 
         this.textShaders = [];
@@ -85,18 +91,19 @@ class MyScene extends CGFscene {
         this.lights[0].update();
     }
     initCameras() {
-        this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(15, 15, 15), vec3.fromValues(0, 0, 0));
+        this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(120, 120, 120), vec3.fromValues(0, 0, 0));
     }
     setDefaultAppearance() {
-        this.setAmbient(0.2, 0.4, 0.8, 1.0);
-        this.setDiffuse(0.2, 0.4, 0.8, 1.0);
-        this.setSpecular(0.2, 0.4, 0.8, 1.0);
+        this.setAmbient(1, 0, 0, 1.0);
+        this.setDiffuse(0, 0, 0, 1.0);
+        this.setSpecular(0, 0, 0, 1.0);
         this.setShininess(10.0);
     }
 
     onSelectedTextureChanged(v) {
         // update wireframe mode when the object changes
         this.appearance.setTexture(this.textures[this.selectedTexture]);
+       
     }
 
     checkKeys() {
@@ -188,19 +195,20 @@ class MyScene extends CGFscene {
             this.popMatrix();
         }    
 
-        if (this.displayVehicle) {
-            this.pushMatrix(); 
-            this.vehicle.display(this.scaleFactor);
-            this.popMatrix();
-        }
-
         if (this.displayCube) {
             this.pushMatrix();
             this.cube.display();
             this.popMatrix();
         }
 
-        
+        if (this.displayVehicle) {
+            //this.material2.setTexture(this.vehicle.textures[0]);
+            this.material2.apply();
+            this.pushMatrix(); 
+            this.vehicle.display(this.scaleFactor);
+            this.popMatrix();
+        }
+
         if (this.displayTerrain) {
             this.material.setTexture(this.terrain.textures[0]);
             this.material.apply();

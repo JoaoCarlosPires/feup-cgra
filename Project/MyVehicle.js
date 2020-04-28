@@ -17,12 +17,14 @@ class MyVehicle extends CGFobject {
         this.posX=0;
         this.posY=0;
         this.posZ=0;
+
+        //this.textures = [];
+        //this.textures.push(new CGFtexture(this.scene, 'images/image.png'));
     }
     initBuffers() {
         this.vertices = [];
         this.indices = [];
         this.normals = [];
-
         var ang = 0;
         var alphaAng = 2*Math.PI/this.slices;
 
