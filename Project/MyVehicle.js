@@ -8,6 +8,7 @@ class MyVehicle extends CGFobject {
         this.body = new MyEllipsoid(scene);
         this.gondola = new MyGondola(scene);
         this.wheel = new MyWheel(scene);
+        this.engines = new MyEngines(scene);
         this.initBuffers();
 
         this.angle=0;
@@ -89,7 +90,7 @@ class MyVehicle extends CGFobject {
         this.scene.translate(this.posX, this.posY, this.posZ);
         this.scene.rotate(this.angle,0,1,0);
         this.scene.scale(scaleFactor,scaleFactor,scaleFactor);
-        
+
         //gondola
         this.scene.pushMatrix();
         this.scene.translate(0,-0.5,0);
@@ -128,22 +129,26 @@ class MyVehicle extends CGFobject {
         this.scene.rotate(90*Math.PI/180,0,0,1);
         this.wheel.display();
         this.scene.popMatrix();
+
+        this.engines.display();
         
         this.body.display();
-
 
         this.scene.popMatrix();
         }
     update(){
         this.posX += this.velocity *Math.sin(this.angle);
         this.posZ += this.velocity *Math.cos(this.angle);
+
+        this.engines.update(0,1);
     }
     turn(val,wheelVal){
         this.angle += val;
         this.wheelAngle = wheelVal;
     }
     accelerate(val){
-        this.velocity=val;
+        this.velocity+=val;
+        this.engines.update(val,1);
     }
     reset(){
         this.angle=0;
@@ -152,6 +157,7 @@ class MyVehicle extends CGFobject {
         this.posX=0;
         this.posY=0;
         this.posZ=0;
+        this.engines.update(0,0);
     }
 }
 

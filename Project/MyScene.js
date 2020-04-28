@@ -45,7 +45,7 @@ class MyScene extends CGFscene {
         this.displayCube = false;
         this.displayTerrain = false;
         this.scaleFactor = 1;
-        this.speedFactor = 1;
+        this.speedFactor = 0.1;
 
         this.appearance = new CGFappearance(this);
         this.appearance.setAmbient(0.1, 0.1, 0.1, 1);
@@ -102,25 +102,34 @@ class MyScene extends CGFscene {
         
         // Check for key codes e.g. in https://keycode.info/
         if (this.gui.isKeyPressed("KeyW")) {
-            text+=" W ";
+            
+            if (this.vehicle.velocity<=0){
+                this.vehicle.velocity = 0.02;
+            }
             this.vehicle.accelerate(this.speedFactor);
+            text+=" W ";
             keysPressed=true;
         }
         
         if (this.gui.isKeyPressed("KeyS")) {
             text+=" S ";
-            this.vehicle.accelerate(-this.speedFactor);
+            if (this.vehicle.velocity > 0){
+                this.vehicle.accelerate(-this.speedFactor);
+                if (this.vehicle.velocity < 0) {
+                    this.vehicle.velocity = 0.02;
+                }
+            }
             keysPressed=true;
         }
 
         if (this.gui.isKeyPressed("KeyA")) {
             text+=" A ";
-            this.vehicle.turn(Math.PI/6,-Math.PI/12);
+            this.vehicle.turn(Math.PI/12,-Math.PI/12);
         }
 
         if (this.gui.isKeyPressed("KeyD")) {
             text+=" D ";
-            this.vehicle.turn(-Math.PI/6,Math.PI/12);
+            this.vehicle.turn(-Math.PI/12,Math.PI/12);
         }
 
         if (this.gui.isKeyPressed("KeyR")) {
@@ -132,8 +141,7 @@ class MyScene extends CGFscene {
         if (!this.gui.isKeyPressed("KeyA") && !this.gui.isKeyPressed("KeyD")) //isto fica aqui por enquanto
             this.vehicle.wheelAngle=0;
         
-        if (keysPressed)
-            this.vehicle.update();   
+        this.vehicle.update();   
     }
 
     // called periodically (as per setUpdatePeriod() in init())
