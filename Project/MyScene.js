@@ -7,7 +7,7 @@ class MyScene extends CGFscene {
         super();
         this.texture = null;
         this.appearance = null;
-        this.appearance2 = null;
+        this.material = null;
         this.selectedTexture = 0;
     }
     init(application) {
@@ -52,8 +52,13 @@ class MyScene extends CGFscene {
         this.appearance.setDiffuse(0.9, 0.9, 0.9, 1);
         this.appearance.setSpecular(0.1, 0.1, 0.1, 1);
         this.appearance.setShininess(10.0);
-        
-        //------
+
+        this.material = new CGFappearance(this);
+        this.material.setAmbient(0.1, 0.1, 0.1, 1);
+        this.material.setDiffuse(0.9, 0.9, 0.9, 1);
+        this.material.setSpecular(0.1, 0.1, 0.1, 1);
+        this.material.setShininess(10.0);
+
 
         //------ Textures
         this.textures = [
@@ -66,12 +71,11 @@ class MyScene extends CGFscene {
             'Earth' : 0,
             'Mountain' : 1,
             'Sky' : 2,
-            'Terrain' : 3,
         };
 
         this.textShaders = [];
 
-        this.terrain.addTexture();
+        this.terrain.addTextShaders();
 
     }
     initLights() {
@@ -93,7 +97,6 @@ class MyScene extends CGFscene {
     onSelectedTextureChanged(v) {
         // update wireframe mode when the object changes
         this.appearance.setTexture(this.textures[this.selectedTexture]);
-        
     }
 
     checkKeys() {
@@ -199,6 +202,8 @@ class MyScene extends CGFscene {
 
         
         if (this.displayTerrain) {
+            this.material.setTexture(this.terrain.textures[0]);
+            this.material.apply();
             this.pushMatrix();
             this.setActiveShader(this.textShaders[0]);
 
