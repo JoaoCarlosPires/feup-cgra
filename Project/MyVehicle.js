@@ -18,6 +18,9 @@ class MyVehicle extends CGFobject {
         this.posY=0;
         this.posZ=0;
 
+        this.centerX = 0;
+        this.centerZ = 0;
+
         //this.textures = [];
         //this.textures.push(new CGFtexture(this.scene, 'images/image.png'));
     }
@@ -93,6 +96,12 @@ class MyVehicle extends CGFobject {
         this.scene.rotate(this.angle,0,1,0);
         this.scene.scale(scaleFactor,scaleFactor,scaleFactor);
 
+        if (this.scene.autoPilot) {
+            this.scene.translate(this.centerX, 0, this.centerZ);
+            this.scene.rotate(((Math.PI*2)/5)*this.scene.timeSpend,0,1,0);
+            this.scene.translate(-this.centerX, 0, -this.centerZ);
+        } 
+    
         //gondola
         this.scene.pushMatrix();
         this.scene.translate(0,-0.5,0);
@@ -141,7 +150,7 @@ class MyVehicle extends CGFobject {
     update(){
         this.posX += this.velocity *Math.sin(this.angle);
         this.posZ += this.velocity *Math.cos(this.angle);
-
+        
         this.engines.update(0,1);
     }
     turn(val,wheelVal){
@@ -160,6 +169,10 @@ class MyVehicle extends CGFobject {
         this.posY=0;
         this.posZ=0;
         this.engines.update(0,0);
+    }
+    autopilot(centerX, centerZ) {
+        this.centerX = centerX;
+        this.centerZ = centerZ;
     }
 }
 
