@@ -18,8 +18,10 @@ class MyVehicle extends CGFobject {
         this.posY=0;
         this.posZ=0;
 
+        this.autopilot=false;
         this.centerX = 0;
         this.centerZ = 0;
+        this.a=0;
 
         //this.textures = [];
         //this.textures.push(new CGFtexture(this.scene, 'images/image.png'));
@@ -92,15 +94,16 @@ class MyVehicle extends CGFobject {
         this.scene.setAmbient(0, 0, 0.5, 1);
         
         //aplica estas transformações a todos os elementos
-        this.scene.translate(this.posX, this.posY, this.posZ);
-        this.scene.rotate(this.angle,0,1,0);
-        this.scene.scale(scaleFactor,scaleFactor,scaleFactor);
 
-        if (this.scene.autoPilot) {
+        if (this.autopilot) {
             this.scene.translate(this.centerX, 0, this.centerZ);
             this.scene.rotate(((Math.PI*2)/5)*this.scene.timeSpend,0,1,0);
             this.scene.translate(-this.centerX, 0, -this.centerZ);
         } 
+
+        this.scene.translate(this.posX, this.posY, this.posZ);
+        this.scene.rotate(this.angle,0,1,0);
+        this.scene.scale(scaleFactor,scaleFactor,scaleFactor);
     
         //gondola
         this.scene.pushMatrix();
@@ -148,8 +151,14 @@ class MyVehicle extends CGFobject {
         this.scene.popMatrix();
         }
     update(){
-        this.posX += this.velocity *Math.sin(this.angle);
-        this.posZ += this.velocity *Math.cos(this.angle);
+        if(this.autopilot){
+            this.a = (Math.PI/2)+this.angle;
+            this.centerX = 5*Math.sin(this.a) + this.posX;
+            this.centerZ = 5*Math.cos(this.a) + this.posZ;
+        }else{
+            this.posX += this.velocity *Math.sin(this.angle);
+            this.posZ += this.velocity *Math.cos(this.angle);
+        }
         
         this.engines.update(0,1);
     }
@@ -169,11 +178,13 @@ class MyVehicle extends CGFobject {
         this.posY=0;
         this.posZ=0;
         this.engines.update(0,0);
+        
+        this.autopilot=false;
+        this.a=0;
+        this.centerX=0;
+        this.centerZ=0;
     }
-    autopilot(centerX, centerZ) {
-        this.centerX = centerX;
-        this.centerZ = centerZ;
-    }
+    
 }
 
 
