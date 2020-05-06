@@ -37,6 +37,21 @@ class MyScene extends CGFscene {
         this.vehicle = new MyVehicle(this, 4);
         this.terrain = new MyTerrain(this);
 
+        //Supplies
+        this.supply1 = new MySupply(this);
+        this.supply2 = new MySupply(this);
+        this.supply3 = new MySupply(this);
+        this.supply4 = new MySupply(this);
+        this.supply5 = new MySupply(this);
+
+        this.supplies = [
+            this.supply1,
+            this.supply2,
+            this.supply3,
+            this.supply4,
+            this.supply5,
+        ];
+
         //Objects connected to MyInterface
         this.displayAxis = true;
         this.displayNormals = false;
@@ -49,6 +64,8 @@ class MyScene extends CGFscene {
         this.speedFactor = 0.1;
 
         this.timeSpend = 0;
+
+        this.supply = 0;
 
         this.appearance = new CGFappearance(this);
         this.appearance.setAmbient(1, 0, 0, 1);
@@ -157,8 +174,21 @@ class MyScene extends CGFscene {
             text+=" R ";
             this.vehicle.reset();
             this.timeSpend=0;
+            this.supply = 0;
+            for (var i = 0; i < 5; i++) {
+                this.supplies[i].reset();
+            }
             keysPressed=true;
-        }   
+        }
+        
+        if (this.gui.isKeyPressed("KeyL")) {
+            text+=" L ";
+            keysPressed=true;
+            if (this.supply<5) {
+                this.supplies[this.supply].drop(this.vehicle.posX, this.vehicle.posY, this.vehicle.posZ);
+                this.supply++;
+            }
+        }  
 
         this.vehicle.update();
     }
@@ -167,6 +197,9 @@ class MyScene extends CGFscene {
     update(t){
         this.checkKeys();
         this.timeSpend+=0.05;
+        for (var i = 0; i < 5; i++) {
+            this.supplies[i].update();
+        }
     }
 
     display() {
@@ -231,6 +264,13 @@ class MyScene extends CGFscene {
             this.terrain.bind();
             this.terrain.display();
             this.setActiveShader(this.defaultShader);
+            this.popMatrix();
+        }
+
+        for (var i = 0; i < 5; i++) {
+            this.material.apply();
+            this.pushMatrix();
+            this.supplies[i].display();
             this.popMatrix();
         }
         
