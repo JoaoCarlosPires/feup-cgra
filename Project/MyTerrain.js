@@ -8,8 +8,8 @@ class MyTerrain extends CGFobject {
         super(scene);
         this.plane = new MyPlane(this.scene, 20);
         this.textures = [];
-        this.textures.push(new CGFtexture(this.scene, "images/terrain.jpg"));
-        this.textures.push(new CGFtexture(this.scene, "images/heightmap.jpg"));
+        this.textures.push(new CGFtexture(this.scene, "images/terrain2.jpg"));
+        this.textures.push(new CGFtexture(this.scene, "images/heightmap2.jpg"));
     }
 
     addTextShaders() {

@@ -97,11 +97,13 @@ class MyScene extends CGFscene {
         this.textures = [
             new CGFtexture(this, 'images/mountain.png'),
             new CGFtexture(this, 'images/cubemap.png'),
+            new CGFtexture(this, 'images/sky.png'),
         ];
         
         this.textureList = {
             'Mountain' : 0,
             'Sky' : 1,
+            'Interstellar': 2
         };
 
         this.textShaders = [];
@@ -262,9 +264,9 @@ class MyScene extends CGFscene {
 
         for (var i = 0; i < 5; i++) {
             if (this.supplies[i].state == SupplyStates.FALLING)
-                this.material3.setTexture(this.textures[2]);
-            else
                 this.material3.setTexture(this.textures[3]);
+            else
+                this.material3.setTexture(this.textures[4]);
             this.material3.apply();
             this.pushMatrix();
             this.supplies[i].display();

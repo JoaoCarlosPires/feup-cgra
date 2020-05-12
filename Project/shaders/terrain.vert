@@ -18,7 +18,7 @@ void main() {
 	vec4 color = texture2D(uSampler2, aTextureCoord);
 	offsetZ = color.b;
 
-	gl_Position = uPMatrix * uMVMatrix * vec4(aVertexPosition.xy, aVertexPosition.z + offsetZ*0.99, 1.0);
+	gl_Position = uPMatrix * uMVMatrix * vec4(aVertexPosition.xy, aVertexPosition.z + offsetZ*0.5, 1.0);
 
 	vTextureCoord = aTextureCoord;
 }
