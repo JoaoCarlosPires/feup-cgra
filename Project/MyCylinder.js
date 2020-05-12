@@ -16,6 +16,7 @@ class MyCylinder extends CGFobject {
 		this.vertices = [];
 		this.normals = [];
 		this.indices = [];
+		this.texCoords = [];
 
 		for (let i = 0; i < this.lados; i++) {
 			this.vertices.push(Math.cos(this.auxangle),0,-Math.sin(this.auxangle));
@@ -39,8 +40,10 @@ class MyCylinder extends CGFobject {
 		for (let i = 0; i < this.lados; i++) {
 			if (i+1 < this.lados) {
 				this.indices.push(i, i+1, i+1+this.lados);
+				this.texCoords.push(this.lados, i);
 			} else {
 				this.indices.push(i, 0, this.lados);
+				this.texCoords.push(this.lados, i);
 			}
 		}
 
@@ -48,8 +51,10 @@ class MyCylinder extends CGFobject {
 		for (let i = 0; i < this.lados; i++) {
 			if (i+1+this.lados >= 2*this.lados) {
 				this.indices.push(i, this.lados, i+this.lados);
+				this.texCoords.push(this.lados, i);
 			} else {
 				this.indices.push(i, i+1+this.lados, i+this.lados);
+				this.texCoords.push(this.lados, i);
 			}
 		}
 

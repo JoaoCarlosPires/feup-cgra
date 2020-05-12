@@ -23,56 +23,37 @@ class MyVehicle extends CGFobject {
         this.centerZ = 0;
         this.a=0;
 
-        //this.textures = [];
-        //this.textures.push(new CGFtexture(this.scene, 'images/image.png'));
+        this.textures = [];
+        this.textures.push(new CGFtexture(this.scene, 'images/nasa.jpg'));
     }
     initBuffers() {
         this.vertices = [];
         this.indices = [];
         this.normals = [];
-        var ang = 0;
-        var alphaAng = 2*Math.PI/this.slices;
 
-        for(var i = 0; i < this.slices; i++){
-            // All vertices have to be declared for a given face
-            // even if they are shared with others, as the normals 
-            // in each face will be different
+        this.bodyTex = new CGFappearance(this.scene);
+        this.bodyTex.setAmbient(0.1, 0.1, 0.1, 1);
+        this.bodyTex.setDiffuse(0.9, 0.9, 0.9, 1);
+        this.bodyTex.setSpecular(0.1, 0.1, 0.1, 1);
+        this.bodyTex.setShininess(10);
+        this.bodyTex.loadTexture('images/balloon.png');
+        this.bodyTex.setTextureWrap('REPEAT','REPEAT');
 
-            var sa=Math.sin(ang);
-            var saa=Math.sin(ang+alphaAng);
-            var ca=Math.cos(ang);
-            var caa=Math.cos(ang+alphaAng);
+        this.gondTex = new CGFappearance(this.scene);
+        this.gondTex.setAmbient(0.1, 0.1, 0.1, 1);
+        this.gondTex.setDiffuse(0.9, 0.9, 0.9, 1);
+        this.gondTex.setSpecular(0.1, 0.1, 0.1, 1);
+        this.gondTex.setShininess(10);
+        this.gondTex.loadTexture('images/gondola.png');
+        this.gondTex.setTextureWrap('REPEAT','REPEAT');
 
-            this.vertices.push(0,1,0);
-            this.vertices.push(ca, 0, -sa);
-            this.vertices.push(caa, 0, -saa);
-
-            // triangle normal computed by cross product of two edges
-            var normal= [
-                saa-sa,
-                ca*saa-sa*caa,
-                caa-ca
-            ];
-
-            // normalization
-            var nsize=Math.sqrt(
-                normal[0]*normal[0]+
-                normal[1]*normal[1]+
-                normal[2]*normal[2]
-                );
-            normal[0]/=nsize;
-            normal[1]/=nsize;
-            normal[2]/=nsize;
-
-            // push normal once for each vertex of this triangle
-            this.normals.push(...normal);
-            this.normals.push(...normal);
-            this.normals.push(...normal);
-
-            this.indices.push(3*i, (3*i+1) , (3*i+2) );
-
-            ang+=alphaAng;
-        }
+        this.wheelTex = new CGFappearance(this.scene);
+        this.wheelTex.setAmbient(0.1, 0.1, 0.1, 1);
+        this.wheelTex.setDiffuse(0.9, 0.9, 0.9, 1);
+        this.wheelTex.setSpecular(0.1, 0.1, 0.1, 1);
+        this.wheelTex.setShininess(10);
+        this.wheelTex.loadTexture('images/wheels.png');
+        this.wheelTex.setTextureWrap('REPEAT','REPEAT');
 
         this.primitiveType = this.scene.gl.TRIANGLES;
         this.initGLBuffers();
@@ -85,6 +66,7 @@ class MyVehicle extends CGFobject {
         this.initBuffers();
         this.initNormalVizBuffers();
     }
+    
     display(scaleFactor){
         //Usar variáveis de orientação e posição aqui
         this.scene.pushMatrix();
@@ -92,6 +74,7 @@ class MyVehicle extends CGFobject {
         this.scene.setDiffuse(0,0,1);
         this.scene.setSpecular(0, 0, 0, 1);
         this.scene.setAmbient(0, 0, 0.5, 1);
+        
         
         //aplica estas transformações a todos os elementos
 
@@ -106,6 +89,7 @@ class MyVehicle extends CGFobject {
         this.scene.scale(scaleFactor,scaleFactor,scaleFactor);
     
         //gondola
+        this.gondTex.apply();
         this.scene.pushMatrix();
         this.scene.translate(0,-0.5,0);
         this.gondola.display();
@@ -115,12 +99,14 @@ class MyVehicle extends CGFobject {
         this.scene.rotate(this.wheelAngle,0,1,0);
 
         //leme de cima
+        this.wheelTex.apply();
         this.scene.pushMatrix();
         this.scene.translate(0,0.4,-0.9);
         this.wheel.display();
         this.scene.popMatrix();
 
         //leme de baixo
+        this.wheelTex.apply();
         this.scene.pushMatrix();
         this.scene.translate(0,-0.4,-0.9);
         this.scene.rotate(180*Math.PI/180,0,0,1);
@@ -131,6 +117,7 @@ class MyVehicle extends CGFobject {
         this.scene.popMatrix();
 
         //leme do lado direito (se visto de frente)
+        this.wheelTex.apply();
         this.scene.pushMatrix();
         this.scene.translate(0.4,0,-0.9);
         this.scene.rotate(-90*Math.PI/180,0,0,1);
@@ -144,10 +131,12 @@ class MyVehicle extends CGFobject {
         this.wheel.display();
         this.scene.popMatrix();
 
+        this.gondTex.apply();
         this.engines.display();
         
+        this.bodyTex.apply();
         this.body.display();
-
+        
         this.scene.popMatrix();
         }
     update(){
