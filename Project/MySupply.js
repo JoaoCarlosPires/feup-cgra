@@ -8,7 +8,6 @@ class MySupply extends CGFobject {
 	constructor(scene) {
 		super(scene);
 		this.initBuffers();
-		
 		this.state=SupplyStates.INACTIVE;
 		this.posX = 0;
 		this.posY = 0;
@@ -120,41 +119,41 @@ class MySupply extends CGFobject {
 
 		this.texCoords=[
 			//bottom tendo em conta o eixo dos z's pra cima
-			0.0, (2/3),
-			(1/4), (2/3),
-			0.0, (1/3),
-			(1/4), (1/3),
+			0.0, (2/3.0),
+			(1/4.0), (2/3.0),
+			0.0, (1/3.0),
+			(1/4.0), (1/3.0),
 
 			//top
-			(3/4), (2/3),
-			(2/4), (2/3),
-			(3/4), (1/3),
-			(2/4), (1/3),
+			(3/4.0), (2/3.0),
+			(2/4.0), (2/3.0),
+			(3/4.0), (1/3.0),
+			(2/4.0), (1/3.0),
 
 			//left
-			(1/4), 1.0,
-			(1/4), (2/3),
-			(2/4), 1.0,
-			(2/4), (2/3),
+			(1/4.0), 1.0,
+			(1/4.0), (2/3.0),
+			(2/4.0), 1.0,
+			(2/4.0), (2/3.0),
 
 			//back
-			(1/4), (2/3),
-			(1/4), (1/3),
-			(2/4), (2/3),
-			(2/4), (1/3),
+			(1/4.0), (2/3.0),
+			(1/4.0), (1/3.0),
+			(2/4.0), (2/3.0),
+			(2/4.0), (1/3.0),
 			
 		
 			//right
-			(1/4), 0.0,
-            (1/4), (1/3),
-            (2/4), 0.0,
-			(2/4), (1/3),
+			(1/4.0), 0.0,
+            (1/4.0), (1/3.0),
+            (2/4.0), 0.0,
+			(2/4.0), (1/3.0),
 
 			//front
-			1.0, (2/3), //3
-			1.0, (1/3), //4
-			(3/4), (2/3), //1
-			(3/4), (1/3), //2
+			1.0, (2/3.0), //3
+			1.0, (1/3.0), //4
+			(3/4.0), (2/3.0), //1
+			(3/4.0), (1/3.0), //2
 			
 		];
 
@@ -206,7 +205,7 @@ class MySupply extends CGFobject {
         this.scene.setAmbient(1, 1, 1, 1);
 
 		this.scene.pushMatrix();
-		this.scene.translate(this.posX, -25, this.posZ);
+		this.scene.translate(this.posX, -24, this.posZ);
         super.display();
         this.scene.popMatrix();
 	}

@@ -86,6 +86,12 @@ class MyScene extends CGFscene {
         this.material2.setSpecular(0, 0, 0, 1);
         this.material2.setShininess(10.0);
 
+        this.material3 = new CGFappearance(this);
+        this.material3.setAmbient(1, 0, 0, 1);
+        this.material3.setDiffuse(0, 0, 0, 1);
+        this.material3.setSpecular(0, 0, 0, 1);
+        this.material3.setShininess(10.0);
+
 
         //------ Textures
         this.textures = [
@@ -101,6 +107,8 @@ class MyScene extends CGFscene {
         this.textShaders = [];
 
         this.terrain.addTextShaders();
+        this.textures.push(new CGFtexture(this, "images/boxFalling.png"));
+        this.textures.push(new CGFtexture(this, "images/boxOpen.png"));
 
     }
     initLights() {
@@ -252,6 +260,17 @@ class MyScene extends CGFscene {
             this.popMatrix();
         }
 
+        for (var i = 0; i < 5; i++) {
+            if (this.supplies[i].state == SupplyStates.FALLING)
+                this.material3.setTexture(this.textures[2]);
+            else
+                this.material3.setTexture(this.textures[3]);
+            this.material3.apply();
+            this.pushMatrix();
+            this.supplies[i].display();
+            this.popMatrix();
+        }
+
         if (this.displayTerrain) {
             this.material.setTexture(this.terrain.textures[0]);
             this.material.apply();
@@ -267,14 +286,6 @@ class MyScene extends CGFscene {
             this.popMatrix();
         }
 
-        for (var i = 0; i < 5; i++) {
-            this.material.apply();
-            this.pushMatrix();
-            this.supplies[i].display();
-            this.popMatrix();
-        }
-        
-        
         this.popMatrix();
 
     }
