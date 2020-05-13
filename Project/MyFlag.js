@@ -18,7 +18,7 @@ class MyFlag extends CGFobject {
 
         this.flagShader = new CGFshader(this.scene.gl,"shaders/flag.vert", "shaders/flag.frag");
         this.flagShader.setUniformsValues({uSampler1: 1})
-        this.flagShader.setUniformsValues({speed: 0});
+        this.flagShader.setUniformsValues({speed: 0.05});
         this.flagShader.setUniformsValues({timeFactor: 0});
 
         this.texture=new CGFtexture(this.scene,'images/flagwave.jpg');
