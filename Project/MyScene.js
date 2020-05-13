@@ -200,12 +200,12 @@ class MyScene extends CGFscene {
             }
         }  
 
-        this.vehicle.update();
     }
 
     // called periodically (as per setUpdatePeriod() in init())
     update(t){
         this.checkKeys();
+        this.vehicle.update(t);
         this.timeSpend+=0.05;
         for (var i = 0; i < 5; i++) {
             this.supplies[i].update();

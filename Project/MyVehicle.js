@@ -9,6 +9,7 @@ class MyVehicle extends CGFobject {
         this.gondola = new MyGondola(scene);
         this.wheel = new MyWheel(scene);
         this.engines = new MyEngines(scene);
+        this.flag = new MyFlag(scene);
         this.initBuffers();
 
         this.angle=0;
@@ -23,8 +24,7 @@ class MyVehicle extends CGFobject {
         this.centerZ = 0;
         this.a=0;
 
-        this.textures = [];
-        this.textures.push(new CGFtexture(this.scene, 'images/nasa.jpg'));
+        this.prevUpdate = 0;
     }
     initBuffers() {
         this.vertices = [];
@@ -137,9 +137,11 @@ class MyVehicle extends CGFobject {
         this.bodyTex.apply();
         this.body.display();
         
+        this.flag.display();
+        
         this.scene.popMatrix();
         }
-    update(){
+    update(t){
         if(this.autopilot){
             this.a = (Math.PI/2)+this.angle;
             this.centerX = 5*Math.sin(this.a) + this.posX;
@@ -150,6 +152,7 @@ class MyVehicle extends CGFobject {
         }
         
         this.engines.update(0,1);
+        this.flag.update(t/1000%1000,this.velocity);
     }
     turn(val,wheelVal){
         this.angle += val;
