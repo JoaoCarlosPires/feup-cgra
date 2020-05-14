@@ -36,6 +36,7 @@ class MyScene extends CGFscene {
         this.cube = new MyUnitCube(this);
         this.vehicle = new MyVehicle(this, 4);
         this.terrain = new MyTerrain(this);
+        this.billboard = new MyBillboard(this);
 
         //Supplies
         this.supply1 = new MySupply(this);
@@ -53,13 +54,13 @@ class MyScene extends CGFscene {
         ];
 
         //Objects connected to MyInterface
-        this.displayAxis = true;
-        this.displayNormals = false;
+        this.displayAxis = false;
         this.displayVehicle = false;
         this.displaySphere = false;
         this.displayCylinder = false;
         this.displayCube = false;
         this.displayTerrain = false;
+        this.displayBillboard = false;
         this.scaleFactor = 3;
         this.speedFactor = 0.1;
 
@@ -213,6 +214,7 @@ class MyScene extends CGFscene {
         for (var i = 0; i < 5; i++) {
             this.supplies[i].update();
         }
+        this.billboard.update(this.supply);
     }
 
     display() {
@@ -290,6 +292,13 @@ class MyScene extends CGFscene {
             this.setActiveShader(this.defaultShader);
             this.popMatrix();
         }
+
+        if (this.displayBillboard) {
+            this.pushMatrix();
+            this.billboard.display(this.scaleFactor, this.supply);
+            this.popMatrix();
+        }
+
 
         this.popMatrix();
 
