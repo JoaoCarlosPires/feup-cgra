@@ -16,7 +16,7 @@ class MyVehicle extends CGFobject {
         this.wheelAngle=0;
         this.velocity = 0;
         this.posX=0;
-        this.posY=0;
+        this.posY=10;
         this.posZ=0;
 
         this.autopilot=false;
@@ -167,7 +167,7 @@ class MyVehicle extends CGFobject {
         this.wheelAngle=0;
         this.velocity=0;
         this.posX=0;
-        this.posY=0;
+        this.posY=10;
         this.posZ=0;
         this.engines.update(0,0);
         

@@ -169,7 +169,7 @@ class MySupply extends CGFobject {
 
 	update() {
 		if (this.state == SupplyStates.FALLING) {
-			if (this.posY<=-24) {
+			if (this.posY<=-13.1) {
 				this.land();
 			} else {
 				this.posY-=0.4;
@@ -189,9 +189,9 @@ class MySupply extends CGFobject {
 	}
 
 	displayFalling() {
-		this.scene.setDiffuse(0,0,0);
+		this.scene.setDiffuse(1,1,1);
         this.scene.setSpecular(0, 0, 0, 1);
-        this.scene.setAmbient(1, 1, 1, 1);
+        this.scene.setAmbient(0, 0, 0, 1);
 
 		this.scene.pushMatrix();
 		this.scene.translate(this.posX, this.posY, this.posZ);
@@ -200,12 +200,12 @@ class MySupply extends CGFobject {
 	}
 
 	displayOnLanded() {
-		this.scene.setDiffuse(0,0,0);
+		this.scene.setDiffuse(1,1,1);
         this.scene.setSpecular(0, 0, 0, 1);
-        this.scene.setAmbient(1, 1, 1, 1);
+        this.scene.setAmbient(0, 0, 0, 1);
 
 		this.scene.pushMatrix();
-		this.scene.translate(this.posX, -24, this.posZ);
+		this.scene.translate(this.posX, -13.1, this.posZ);
         super.display();
         this.scene.popMatrix();
 	}

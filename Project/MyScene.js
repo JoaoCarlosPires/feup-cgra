@@ -87,23 +87,26 @@ class MyScene extends CGFscene {
         this.material2.setShininess(10.0);
 
         this.material3 = new CGFappearance(this);
-        this.material3.setAmbient(1, 0, 0, 1);
+        this.material3.setAmbient(0, 0, 0, 1);
         this.material3.setDiffuse(0, 0, 0, 1);
         this.material3.setSpecular(0, 0, 0, 1);
+        this.appearance.setEmission(1,1,1,1);
         this.material3.setShininess(10.0);
 
 
         //------ Textures
         this.textures = [
+            new CGFtexture(this, 'images/sky.png'),
             new CGFtexture(this, 'images/mountain.png'),
             new CGFtexture(this, 'images/cubemap.png'),
-            new CGFtexture(this, 'images/sky.png'),
+            new CGFtexture(this, 'images/earth.jpg')
         ];
         
         this.textureList = {
-            'Mountain' : 0,
-            'Sky' : 1,
-            'Interstellar': 2
+            'Interstellar': 0,
+            'Mountain' : 1,
+            'Sky' : 2,
+            'Earth' : 3,
         };
 
         this.textShaders = [];
@@ -264,9 +267,9 @@ class MyScene extends CGFscene {
 
         for (var i = 0; i < 5; i++) {
             if (this.supplies[i].state == SupplyStates.FALLING)
-                this.material3.setTexture(this.textures[3]);
-            else
                 this.material3.setTexture(this.textures[4]);
+            else
+                this.material3.setTexture(this.textures[5]);
             this.material3.apply();
             this.pushMatrix();
             this.supplies[i].display();
