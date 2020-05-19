@@ -68,6 +68,8 @@ class MyScene extends CGFscene {
 
         this.supply = 0;
 
+        this.nUpdate = 0;
+
         this.appearance = new CGFappearance(this);
         this.appearance.setAmbient(1, 0, 0, 1);
         this.appearance.setDiffuse(0, 0, 0, 1);
@@ -147,8 +149,11 @@ class MyScene extends CGFscene {
                 text+= " P ";
                 this.vehicle.autopilot=true;
             }
-            else if (this.gui.isKeyPressed("KeyP"))
+            else if (this.gui.isKeyPressed("KeyP")) {
                 this.vehicle.autopilot=false;
+                this.vehicle.endAutoPilot();
+                this.timeSpend=0;
+            }
 
             // Check for key codes e.g. in https://keycode.info/
             if (this.gui.isKeyPressed("KeyW") && !this.vehicle.autopilot) {
@@ -204,17 +209,23 @@ class MyScene extends CGFscene {
             }
         }  
 
+        //console.log(text);
+
     }
 
     // called periodically (as per setUpdatePeriod() in init())
     update(t){
-        this.checkKeys();
+        this.nUpdate++;
+        if (this.update%2!=0)
+            this.checkKeys();
         this.vehicle.update(t);
-        this.timeSpend+=0.05;
+        if (this.vehicle.autopilot)
+            this.timeSpend+=0.05;
         for (var i = 0; i < 5; i++) {
             this.supplies[i].update();
         }
         this.billboard.update(this.supply);
+        
     }
 
     display() {

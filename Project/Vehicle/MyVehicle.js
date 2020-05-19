@@ -85,7 +85,7 @@ class MyVehicle extends CGFobject {
         } 
 
         this.scene.translate(this.posX, this.posY, this.posZ);
-        this.scene.rotate(this.angle,0,1,0);
+        this.scene.rotate(this.angle,0,1,0);       
         this.scene.scale(scaleFactor,scaleFactor,scaleFactor);
     
         //gondola
@@ -143,6 +143,7 @@ class MyVehicle extends CGFobject {
         }
     update(t){
         if(this.autopilot){
+            console.log(this.a);
             this.a = (Math.PI/2)+this.angle;
             this.centerX = 5*Math.sin(this.a) + this.posX;
             this.centerZ = 5*Math.cos(this.a) + this.posZ;
@@ -153,6 +154,13 @@ class MyVehicle extends CGFobject {
         
         this.engines.update(0,1);
         this.flag.update(t/1000%1000,this.velocity);
+    }
+    endAutoPilot() {
+        this.posX = this.centerX;
+        this.posZ = this.centerZ;
+        this.posX += 5*Math.sin(((Math.PI*2)/5)*this.scene.timeSpend);
+        this.posZ += 5*Math.cos(((Math.PI*2)/5)*this.scene.timeSpend);
+        this.angle += ((Math.PI*2)/5)*this.scene.timeSpend;
     }
     turn(val,wheelVal){
         this.angle += val;
