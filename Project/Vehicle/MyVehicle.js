@@ -147,6 +147,7 @@ class MyVehicle extends CGFobject {
             this.a = (Math.PI/2)+this.angle;
             this.centerX = 5*Math.sin(this.a) + this.posX;
             this.centerZ = 5*Math.cos(this.a) + this.posZ;
+            this.wheelAngle = -Math.PI/12;
         }else{
             this.posX += this.velocity *Math.sin(this.angle);
             this.posZ += this.velocity *Math.cos(this.angle);

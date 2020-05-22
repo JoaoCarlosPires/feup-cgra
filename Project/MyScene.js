@@ -186,7 +186,7 @@ class MyScene extends CGFscene {
                 this.vehicle.turn(-Math.PI/12,Math.PI/12);
             }
 
-            if (!this.gui.isKeyPressed("KeyA") && !this.gui.isKeyPressed("KeyD")) //isto fica aqui por enquanto
+            if (!this.gui.isKeyPressed("KeyA") && !this.gui.isKeyPressed("KeyD"))
                 this.vehicle.wheelAngle=0;
 
         if (this.gui.isKeyPressed("KeyR")) {
