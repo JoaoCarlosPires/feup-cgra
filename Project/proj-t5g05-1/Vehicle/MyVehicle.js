@@ -142,17 +142,16 @@ class MyVehicle extends CGFobject {
         this.scene.popMatrix();
         }
     update(t){
-        if(this.autopilot){
-            console.log(this.a);
+        if(this.autopilot) {
             this.a = (Math.PI/2)+this.angle;
             this.centerX = 5*Math.sin(this.a) + this.posX;
             this.centerZ = 5*Math.cos(this.a) + this.posZ;
             this.wheelAngle = -Math.PI/12;
-        }else{
+        } else {
             this.posX += this.velocity *Math.sin(this.angle);
             this.posZ += this.velocity *Math.cos(this.angle);
         }
-        
+    
         this.engines.update(0,1);
         this.flag.update(t/1000%1000,this.velocity);
     }

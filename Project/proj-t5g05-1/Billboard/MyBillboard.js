@@ -34,7 +34,7 @@ class MyBillboard extends CGFobject {
         this.supplyShader.setUniformsValues({uSampler1: supply});
 
         this.scene.pushMatrix();
-        this.scene.translate(-13,-11,-13);
+        this.scene.translate(-13,-12.6,-13);
         this.scene.rotate(Math.PI/4,0,1,0);
         this.scene.scale(scaleFactor,scaleFactor,scaleFactor);
         this.scene.translate(1,1.5,0);

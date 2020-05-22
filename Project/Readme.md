@@ -1,23 +1,24 @@
-# Coisas por corrigir
+# Geral
 
-- Posição final do piloto automático
+![](proj-t5g05-1.png)
+![](proj-t5g05-2.png)
 
 # Screenshots
 
-## 1
-![](Screenshots/proj-t5g05-1.PNG)
+## Dirigível (proj-t5g05-1.png)
+![](Screenshots/proj-t5g05-1.png)
 
-## 2
+## *Cube Map* + Terreno + Dirigível (proj-t5g05-2.png)
 ![](Screenshots/proj-t5g05-2.png)
 
-## 3
+## Dirigível + *Supply falling* (proj-t5g05-3.png)
 ![](Screenshots/proj-t5g05-3.png)
 
-## 4
+## *Supply on floor* (proj-t5g05-4.png)
 ![](Screenshots/proj-t5g05-4.png)
 
-## 5
-![](Screenshots/proj-t5g05-5.PNG)
+## Dirigível + *Flag* (proj-t5g05-5.png)
+![](Screenshots/proj-t5g05-5.png)
 
-## 6
+## Dirigível + *Flag* + *Supply on floor* + Terreno + *Cube Map* + *Billboard* (proj-t5g05-6.png)
 ![](Screenshots/proj-t5g05-6.png)
